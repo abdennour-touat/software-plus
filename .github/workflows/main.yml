@@ -50,7 +50,6 @@ jobs:
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           TAURI_DEV_WATCHER_IGNORE_FILE: ${{ secrets.TAURI_DEV_WATCHER_IGNORE_FILE }}
-
         with:
           # tauri-action replaces \_\_VERSION\_\_ with the app version
           tagName: ${{ github.ref_name }}
