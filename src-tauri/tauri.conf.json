@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "software-plus",
-    "version": "0.1.3"
+    "version": "0.1.4"
   },
   "tauri": {
     "allowlist": {
@@ -50,13 +50,12 @@
       "csp": null
     },
     "updater": {
-    "active": true,
-    "endpoints": [
+      "active": true,
+      "endpoints": [
         "https://abdennour-touat.netlify.app/sqlite--tauri-template/{{target}}/{{arch}}/{{current_version}}"
-    ],
-    "dialog": true,
-    "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDFEOTA1MDJBRkRFMTExQjAKUldTd0VlSDlLbENRSFlnL3Y2Z2c4NktxcDZ4c3JLbGo0N0hJdXRCZjdoTmswb2k5YWNaY2trREIK"
-
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDFEOTA1MDJBRkRFMTExQjAKUldTd0VlSDlLbENRSFlnL3Y2Z2c4NktxcDZ4c3JLbGo0N0hJdXRCZjdoTmswb2k5YWNaY2trREIK"
     },
     "windows": [
       {
