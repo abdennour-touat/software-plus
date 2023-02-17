@@ -2,7 +2,6 @@ use serde::Serialize;
 use ts_rs::TS;
 
 pub mod key;
-pub mod videos;
 
 pub mod users;
 #[derive(TS, Serialize, Clone)]

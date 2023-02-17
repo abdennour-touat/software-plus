@@ -15,13 +15,7 @@ diesel::table! {
     }
 }
 
-diesel::table! {
-    video (id) {
-        id -> Integer,
-        title -> Text,
-        description -> Text,
-        removed -> Bool,
-    }
-}
-
-diesel::allow_tables_to_appear_in_same_query!(license_key, user_table, video,);
+diesel::allow_tables_to_appear_in_same_query!(
+    license_key,
+    user_table,
+);
