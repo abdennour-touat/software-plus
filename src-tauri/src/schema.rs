@@ -8,7 +8,7 @@ diesel::table! {
 }
 
 diesel::table! {
-    user (id) {
+    user_table (id) {
         id -> Integer,
         username -> Text,
         password -> Text,
@@ -24,8 +24,4 @@ diesel::table! {
     }
 }
 
-diesel::allow_tables_to_appear_in_same_query!(
-    license_key,
-    user,
-    video,
-);
+diesel::allow_tables_to_appear_in_same_query!(license_key, user_table, video,);

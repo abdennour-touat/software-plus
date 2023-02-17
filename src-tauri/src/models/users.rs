@@ -1,7 +1,7 @@
 use crate::{
     db::ConnPooled,
     deleteAll, insert,
-    schema::user::{self, dsl::*},
+    schema::user_table::{self, dsl::*},
     utils::error::Error,
 };
 use diesel::{QueryDsl, RunQueryDsl, SqliteExpressionMethods};
@@ -23,7 +23,7 @@ pub enum AuthData {
 
 #[derive(Deserialize, Debug, TS, Queryable, Insertable, Serialize)]
 #[ts(export, export_to = "../src/bindings/")]
-#[diesel(table_name = user)]
+#[diesel(table_name = user_table)]
 pub struct User {
     pub id: i32,
     pub username: String,
@@ -31,7 +31,7 @@ pub struct User {
 }
 #[derive(Deserialize, Debug, TS, Queryable, Insertable, Serialize)]
 #[ts(export, export_to = "../src/bindings/")]
-#[diesel(table_name = user)]
+#[diesel(table_name = user_table)]
 pub struct NewUser {
     pub username: String,
     pub password: String,
@@ -75,7 +75,7 @@ impl UserBmc {
         };
         return match data {
             Ok(val) => {
-                insert!(user)
+                insert!(user_table)
                     .values(val)
                     // .returning(id)
                     .execute(store)
@@ -87,14 +87,14 @@ impl UserBmc {
     }
     pub fn get_user(store: &mut ConnPooled, data: i32) -> Result<Vec<User>> {
         let res: std::result::Result<Vec<User>, diesel::result::Error> =
-            user.filter(id.is(data)).load(store);
+            user_table.filter(id.is(data)).load(store);
         match res {
             Ok(res) => Ok(res),
             Err(_) => Err(Error::CtxFail),
         }
     }
     pub fn get_users(store: &mut ConnPooled) -> Result<Vec<User>> {
-        return match user.load(store) {
+        return match user_table.load(store) {
             Ok(res) => Ok(res),
             Err(_) => Err(Error::CtxFail),
         };
@@ -133,7 +133,7 @@ impl UserBmc {
         res
     }
     pub fn delete_all(store: &mut ConnPooled) -> Result<bool> {
-        match deleteAll!(user).execute(store) {
+        match deleteAll!(user_table).execute(store) {
             Ok(_) => Ok(true),
             Err(_) => Err(Error::CtxFail),
         }
