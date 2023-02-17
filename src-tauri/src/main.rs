@@ -21,7 +21,7 @@ use utils::migration;
 use crate::{
     ipc::{
         key::{add_key, delete_keys, get_key},
-        user::{add_user, check_auth, delete_users, get_user, get_users},
+        user::{add_user, check_auth, delete_user, delete_users, get_user, get_users},
     },
     migration::run_migration,
 };
@@ -35,11 +35,11 @@ fn main() {
         .setup(|app| {
             //for production
             // let config = app.config();
-            let mut store = Store::new().unwrap_or_else(|e| {
+            let store = Store::new().unwrap_or_else(|e| {
                 eprintln!("{}", e);
                 process::exit(1);
             });
-            run_migration(&mut store.conn);
+            run_migration(&store.conn);
             app.manage::<ConnPool>(store.conn);
             Ok(())
         })
@@ -51,7 +51,8 @@ fn main() {
             get_users,
             check_auth,
             delete_keys,
-            delete_users
+            delete_users,
+            delete_user
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

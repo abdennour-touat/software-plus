@@ -35,3 +35,9 @@ pub fn delete_users(store: tauri::State<'_, ConnPool>) -> IpcResponse<bool> {
     let conn = connect!(store);
     UserBmc::delete_all(conn).into()
 }
+
+#[tauri::command]
+pub fn delete_user(store: tauri::State<'_, ConnPool>, params: i32) -> IpcResponse<()> {
+    let conn = connect!(store);
+    UserBmc::delete(conn, params).into()
+}

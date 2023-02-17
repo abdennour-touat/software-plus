@@ -12,5 +12,5 @@ pub fn get_app_path(config: &Arc<Config>) -> PathBuf {
     if !path.exists() {
         fs::create_dir_all(&path).unwrap();
     }
-    return path;
+    path
 }

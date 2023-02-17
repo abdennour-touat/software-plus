@@ -3,7 +3,7 @@ use diesel::{
     prelude::*,
     r2d2::{ConnectionManager, Pool, PooledConnection},
 };
-static DB_FILE_NAME: &'static str = "quick-auth.db";
+// static DB_FILE_NAME: &str = "quick-auth.db";
 
 pub type ConnPool = Pool<ConnectionManager<SqliteConnection>>;
 pub type ConnPooled = PooledConnection<ConnectionManager<SqliteConnection>>;

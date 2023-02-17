@@ -85,10 +85,10 @@ impl UserBmc {
         }
     }
     pub fn get_users(store: &mut ConnPooled) -> Result<Vec<User>> {
-        return match user_table.load(store) {
+        match user_table.load(store) {
             Ok(res) => Ok(res),
             Err(_) => Err(Error::DataBaseError("No user found".to_string())),
-        };
+        }
     }
     pub fn check_authentication(store: &mut ConnPooled) -> Result<AuthData> {
         //initialize the encrypt
@@ -104,7 +104,7 @@ impl UserBmc {
         };
         //decrypt the password
         let auth = match pd?.get(0) {
-            Some(val) => Ok(String::from(decrypt(&mcrypt, val.password.as_str()))),
+            Some(val) => Ok(decrypt(&mcrypt, val.password.as_str())),
             None => Err(AuthData::NoUser),
         };
         let res = match key {
@@ -117,11 +117,10 @@ impl UserBmc {
             },
             Err(_) => Err(AuthData::NoLicense),
         };
-        let res = match res {
+        match res {
             Ok(val) => Ok(val),
             Err(err) => Ok(err),
-        };
-        res
+        }
     }
     pub fn delete(store: &mut ConnPooled, user_id: i32) -> Result<()> {
         match delete!(user_table, id.is(user_id)).execute(store) {

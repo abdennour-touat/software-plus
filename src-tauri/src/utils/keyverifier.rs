@@ -14,7 +14,7 @@ impl KeyVerifer {
 
         let key = LicenseKey::parse::<HexFormat>(key);
         println!("{:?}", key);
-        if key.get_bytes().len() == 0 {
+        if key.get_bytes().is_empty() {
             Err(Status::Invalid)
         } else {
             match verifier.verify(&key) {
