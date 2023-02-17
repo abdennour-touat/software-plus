@@ -1,7 +1,8 @@
 use crate::{
     connect,
     db::ConnPool,
-    models::users::{AuthData, User, UserBmc, UserForCreate},
+    models::users::{User, UserBmc, UserForCreate},
+    utils::error::AuthData,
 };
 
 use super::response::IpcResponse;

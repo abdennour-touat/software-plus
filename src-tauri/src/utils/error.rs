@@ -8,11 +8,21 @@
 //!
 
 use serde::Serialize;
+use ts_rs::TS;
+
+#[derive(Debug, TS, Serialize)]
+#[ts(export, export_to = "../src/bindings/")]
+pub enum AuthData {
+    NoLicense,
+    NoUser,
+    BadData,
+    Valid,
+}
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
-    #[error("Fail to execute query from the database")]
-    DataBaseError,
+    #[error("Fail to execute query from the database {0}")]
+    DataBaseError(String),
 
     // #[error("Value not of type '{0}'")]
     // XValueNotOfType(&'static str),

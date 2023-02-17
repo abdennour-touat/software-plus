@@ -1,8 +1,8 @@
 use crate::{
     db::ConnPooled,
-    deleteAll, insert,
+    delete, deleteAll, insert,
     schema::user_table::{self, dsl::*},
-    utils::error::Error,
+    utils::error::{AuthData, Error},
 };
 use diesel::{QueryDsl, RunQueryDsl, SqliteExpressionMethods};
 use magic_crypt::{MagicCrypt256, MagicCryptTrait};
@@ -11,15 +11,6 @@ use ts_rs::TS;
 
 use super::key::KeyBmc;
 use crate::prelude::Result;
-
-#[derive(Debug, TS, Serialize)]
-#[ts(export, export_to = "../src/bindings/")]
-pub enum AuthData {
-    NoLicense,
-    NoUser,
-    BadData,
-    Valid,
-}
 
 #[derive(Deserialize, Debug, TS, Queryable, Insertable, Serialize)]
 #[ts(export, export_to = "../src/bindings/")]
@@ -71,7 +62,7 @@ impl UserBmc {
                     password: hashed_password,
                 })
             }
-            None => Err(Error::DataBaseError),
+            None => Err(Error::DataBaseError("No key found".to_string())),
         };
         return match data {
             Ok(val) => {
@@ -82,7 +73,7 @@ impl UserBmc {
                     .expect("couldn't insert user");
                 Ok(())
             }
-            Err(e) => Err(e),
+            Err(err) => Err(err),
         };
     }
     pub fn get_user(store: &mut ConnPooled, data: i32) -> Result<Vec<User>> {
@@ -90,13 +81,13 @@ impl UserBmc {
             user_table.filter(id.is(data)).load(store);
         match res {
             Ok(res) => Ok(res),
-            Err(_) => Err(Error::DataBaseError),
+            Err(_) => Err(Error::DataBaseError("No user found".to_string())),
         }
     }
     pub fn get_users(store: &mut ConnPooled) -> Result<Vec<User>> {
         return match user_table.load(store) {
             Ok(res) => Ok(res),
-            Err(_) => Err(Error::DataBaseError),
+            Err(_) => Err(Error::DataBaseError("No user found".to_string())),
         };
     }
     pub fn check_authentication(store: &mut ConnPooled) -> Result<AuthData> {
@@ -132,10 +123,17 @@ impl UserBmc {
         };
         res
     }
+    pub fn delete(store: &mut ConnPooled, user_id: i32) -> Result<()> {
+        match delete!(user_table, id.is(user_id)).execute(store) {
+            Ok(_) => Ok(()),
+            Err(_) => Err(Error::DataBaseError("couldn't delete user".to_string())),
+        }
+        // .expect("couldn't delete user");
+    }
     pub fn delete_all(store: &mut ConnPooled) -> Result<bool> {
         match deleteAll!(user_table).execute(store) {
             Ok(_) => Ok(true),
-            Err(_) => Err(Error::DataBaseError),
+            Err(_) => Err(Error::DataBaseError("couldn't delete users".to_string())),
         }
     }
 }
