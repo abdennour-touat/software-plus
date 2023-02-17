@@ -52,13 +52,13 @@ impl KeyBmc {
     pub fn get(store: &mut ConnPooled) -> Result<Vec<Key>> {
         match license_key.load(store) {
             Ok(res) => Ok(res),
-            Err(_) => Err(Error::CtxFail),
+            Err(_) => Err(Error::DataBaseError),
         }
     }
     pub fn delete_all(store: &mut ConnPooled) -> Result<bool> {
         match deleteAll!(license_key).execute(store) {
             Ok(_) => Ok(true),
-            Err(_) => Err(Error::CtxFail),
+            Err(_) => Err(Error::DataBaseError),
         }
     }
 }

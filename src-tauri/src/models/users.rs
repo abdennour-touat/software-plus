@@ -71,7 +71,7 @@ impl UserBmc {
                     password: hashed_password,
                 })
             }
-            None => Err(Error::CtxFail),
+            None => Err(Error::DataBaseError),
         };
         return match data {
             Ok(val) => {
@@ -90,13 +90,13 @@ impl UserBmc {
             user_table.filter(id.is(data)).load(store);
         match res {
             Ok(res) => Ok(res),
-            Err(_) => Err(Error::CtxFail),
+            Err(_) => Err(Error::DataBaseError),
         }
     }
     pub fn get_users(store: &mut ConnPooled) -> Result<Vec<User>> {
         return match user_table.load(store) {
             Ok(res) => Ok(res),
-            Err(_) => Err(Error::CtxFail),
+            Err(_) => Err(Error::DataBaseError),
         };
     }
     pub fn check_authentication(store: &mut ConnPooled) -> Result<AuthData> {
@@ -135,7 +135,7 @@ impl UserBmc {
     pub fn delete_all(store: &mut ConnPooled) -> Result<bool> {
         match deleteAll!(user_table).execute(store) {
             Ok(_) => Ok(true),
-            Err(_) => Err(Error::CtxFail),
+            Err(_) => Err(Error::DataBaseError),
         }
     }
 }
