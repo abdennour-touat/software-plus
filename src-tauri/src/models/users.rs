@@ -32,7 +32,7 @@ pub struct User {
 #[derive(Deserialize, Debug, TS, Queryable, Insertable, Serialize)]
 #[ts(export, export_to = "../src/bindings/")]
 #[diesel(table_name = user_table)]
-pub struct NewUser {
+pub struct UserForCreate {
     pub username: String,
     pub password: String,
 }
@@ -48,7 +48,7 @@ fn decrypt(crypt: &MagicCrypt256, string: &str) -> String {
         .expect("error decrypting")
 }
 impl UserBmc {
-    pub fn insert(store: &mut ConnPooled, data: NewUser) -> Result<()> {
+    pub fn insert(store: &mut ConnPooled, data: UserForCreate) -> Result<()> {
         //initialze the encrypt
         let mcrypt = new_magic_crypt!("magickey", 256);
         //get the key
@@ -66,7 +66,7 @@ impl UserBmc {
                         data.password.as_str()
                     ),
                 );
-                Ok(NewUser {
+                Ok(UserForCreate {
                     username: data.username,
                     password: hashed_password,
                 })

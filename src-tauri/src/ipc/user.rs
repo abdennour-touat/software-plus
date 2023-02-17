@@ -1,15 +1,13 @@
 use crate::{
     connect,
     db::ConnPool,
-    models::users::{AuthData, NewUser, User, UserBmc},
+    models::users::{AuthData, User, UserBmc, UserForCreate},
 };
 
 use super::response::IpcResponse;
-// *Important: add remove, get and update user logic
-// TODO document everything
-// TODO create a helper function for
+
 #[tauri::command]
-pub fn add_user(store: tauri::State<'_, ConnPool>, params: NewUser) -> IpcResponse<()> {
+pub fn add_user(store: tauri::State<'_, ConnPool>, params: UserForCreate) -> IpcResponse<()> {
     let conn = connect!(store);
     UserBmc::insert(conn, params).into()
 }
