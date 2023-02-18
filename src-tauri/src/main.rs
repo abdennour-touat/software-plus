@@ -1,4 +1,6 @@
-#![cfg_attr(
+/// This is the main entry point of your Tauri application.
+/// #SOFTWARE PLUS
+#[cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
@@ -25,11 +27,6 @@ use crate::{
     },
     migration::run_migration,
 };
-// * refactor everything
-//TODO minimize the root files
-// TODO document everything
-// * ADD the graphs and diagrams
-
 fn main() {
     tauri::Builder::default()
         .setup(|app| {

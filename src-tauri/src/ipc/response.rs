@@ -7,7 +7,7 @@ struct IpcError {
 }
 
 #[derive(Serialize)]
-pub struct IpcSimpleResult<D>
+struct IpcSimpleResult<D>
 where
     D: Serialize,
 {
