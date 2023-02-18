@@ -12,7 +12,7 @@ use ts_rs::TS;
 use super::key::KeyBmc;
 use crate::prelude::Result;
 
-#[derive(Deserialize, Debug, TS, Queryable, Insertable, Serialize)]
+#[derive(Deserialize, Debug, TS, Queryable, Insertable, Serialize, Clone)]
 #[ts(export, export_to = "../src/bindings/")]
 #[diesel(table_name = user_table)]
 pub struct User {
@@ -76,11 +76,12 @@ impl UserBmc {
             Err(err) => Err(err),
         };
     }
-    pub fn get_user(store: &mut ConnPooled, data: i32) -> Result<Vec<User>> {
+    pub fn get_user(store: &mut ConnPooled, data: i32) -> Result<User> {
         let res: std::result::Result<Vec<User>, diesel::result::Error> =
             user_table.filter(id.is(data)).load(store);
+
         match res {
-            Ok(res) => Ok(res),
+            Ok(res) => Ok(res.get(0).unwrap().clone()),
             Err(_) => Err(Error::DataBaseError("No user found".to_string())),
         }
     }

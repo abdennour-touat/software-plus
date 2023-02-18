@@ -14,7 +14,7 @@ pub fn add_user(store: tauri::State<'_, ConnPool>, params: UserForCreate) -> Ipc
 }
 
 #[tauri::command]
-pub fn get_user(store: tauri::State<'_, ConnPool>, params: i32) -> IpcResponse<Vec<User>> {
+pub fn get_user(store: tauri::State<'_, ConnPool>, params: i32) -> IpcResponse<User> {
     let conn = connect!(store);
     UserBmc::get_user(conn, params).into()
 }

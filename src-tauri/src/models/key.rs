@@ -1,7 +1,7 @@
 use crate::deleteAll;
 use crate::prelude::Result;
+use crate::schema::license_key;
 use crate::schema::license_key::dsl::*;
-use crate::schema::license_key::{self};
 use crate::utils::error::Error;
 use crate::utils::keyverifier::KeyVerifer;
 use crate::{db::ConnPooled, insert};

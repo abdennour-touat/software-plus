@@ -24,6 +24,9 @@ pub enum Error {
     #[error("Fail to execute query from the database {0}")]
     DataBaseError(String),
 
+    #[error("invalid key: {0}")]
+    AuthKeyError(String),
+
     // #[error("Value not of type '{0}'")]
     // XValueNotOfType(&'static str),
 
