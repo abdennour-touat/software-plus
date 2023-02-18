@@ -45,3 +45,38 @@ _management system for entreprieses and small businesses_
 3. run `yarn tauri build` to build the app
 4. run `yarn tauri info` to get the path to the tauri folder
 5. run `cd src-tauri && cargo test` to generate the bindings
+
+## API Reference
+
+### User
+
+#### Create User
+
+```rust
+    UserBmc::insert_user(
+        store,
+        "username",
+        "password",
+    )
+```
+
+#### Description
+
+Creates a new user in the database
+
+#### Parameters
+
+| Name | Type | Description |
+| store | ConnPooled | a refrence to the connection |
+| username | String | the username |
+| password | String |the password |
+
+#### Returns
+
+| Type | Description |
+| Result<()> | the user that was created |
+
+#### Errors
+
+| Type | Description |
+| Error | no license key found in the database |
