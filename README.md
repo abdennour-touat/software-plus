@@ -66,17 +66,20 @@ Creates a new user in the database
 
 #### Parameters
 
-| Name | Type | Description |
-| store | ConnPooled | a refrence to the connection |
-| username | String | the username |
-| password | String |the password |
+| Name     | Type       | Description                  |
+| -------- | ---------- | ---------------------------- |
+| store    | ConnPooled | a refrence to the connection |
+| username | String     | the username                 |
+| password | String     | the password                 |
 
 #### Returns
 
-| Type | Description |
+| Type       | Description               |
+| ---------- | ------------------------- |
 | Result<()> | the user that was created |
 
 #### Errors
 
-| Type | Description |
+| Type  | Description                          |
+| ----- | ------------------------------------ |
 | Error | no license key found in the database |
