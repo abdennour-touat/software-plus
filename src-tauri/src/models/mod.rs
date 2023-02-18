@@ -5,7 +5,7 @@ pub mod key;
 
 pub mod users;
 #[derive(TS, Serialize, Clone)]
-#[ts(export, export_to = "../src-ui/src/bindings/")]
+#[ts(export, export_to = "../src/bindings/")]
 pub struct ModelMutateResultData {
     pub id: String,
 }
